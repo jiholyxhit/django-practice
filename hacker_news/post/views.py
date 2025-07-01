@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+# from django.http import HttpResponse
+from django.shortcuts import render
 from .models import Post
 
 # Create your views here.
@@ -8,6 +9,8 @@ from .models import Post
 
 def posts_view(request):
     posts = Post.objects.all()
-    result = ", ".join([p.title for p in posts])
-    return HttpResponse(result)
+    # result = ", ".join([p.title for p in posts])
+    context = {"posts": posts}
+    # return HttpResponse(result)
+    return render(request, "post_list.html", context)
     
