@@ -1,5 +1,6 @@
 from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, render, redirect
+from django.db.models import F
 from .models import Post
 from .forms import PostForm
 
@@ -48,4 +49,14 @@ def posts_view(request):
 def post_view(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     context = {"post": post}
-    return render(request, "post_detail.html", context)  
+    return render(request, "post_detail.html", context)
+
+
+def post_like_view(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    post.points = F("points") + 1
+    post.save()
+    post.refresh_from_db()
+    context = {"post": post}
+    return render(request, "post_detail.html", context)
+
