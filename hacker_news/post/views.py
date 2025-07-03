@@ -1,5 +1,5 @@
 from django.http import HttpResponseBadRequest
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import Post
 from .forms import PostForm
 
@@ -39,9 +39,10 @@ def posts_view(request):
         # if not (type(author_name) is str and 0 < len(title) <= 32):
         #     return HttpResponseBadRequest("Invalid author_name")
         
-        posts = Post.objects.all()
-        context = {"posts": posts, "form": form}
-        return render(request, "post_list.html", context)  
+        # posts = Post.objects.all()
+        # context = {"posts": posts, "form": form}
+        # return render(request, "post_list.html", context)  
+        return redirect("posts")
 
 
 def post_view(request, post_id):
