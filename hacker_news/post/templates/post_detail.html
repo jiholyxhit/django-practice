@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 
 <h1>제목: {{post.title}}</h1>
 
@@ -14,3 +17,5 @@
 </form>
 
 <a href="{% url "posts" %}">>>게시글 목록</a>
+
+{% endblock %}
