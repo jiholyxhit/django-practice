@@ -13,22 +13,22 @@ def posts_view(request):
     if request.method == "GET":
         posts = Post.objects.all()
         # result = ", ".join([p.title for p in posts])
-        context = {"posts": posts, "form": PostForm}
+        context = {"posts": posts}
         # return HttpResponse(result)
         return render(request, "post_list.html", context)  
 
-    elif request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            title = form.cleaned_data["title"]
-            body = form.cleaned_data["body"]
-            author_name = form.cleaned_data["author_name"]
+    # elif request.method == "POST":
+    #     form = PostForm(request.POST)
+    #     if form.is_valid():
+    #         title = form.cleaned_data["title"]
+    #         body = form.cleaned_data["body"]
+    #         author_name = form.cleaned_data["author_name"]
             
-            post = Post.objects.create(
-                title=title, body=body, author_name=author_name
-            )
-            context = {"post": post, "form": PostForm}
-            return render(request, "post_detail.html", context)
+    #         post = Post.objects.create(
+    #             title=title, body=body, author_name=author_name
+    #         )
+    #         context = {"post": post, "form": PostForm}
+    #         return render(request, "post_detail.html", context)
         # title = request.POST.get("title")
         # body = request.POST.get("body")
         # author_name = request.POST.get("author_name")
@@ -43,6 +43,26 @@ def posts_view(request):
         # posts = Post.objects.all()
         # context = {"posts": posts, "form": form}
         # return render(request, "post_list.html", context)  
+        # return redirect("posts")
+
+def post_create_view(request):
+    if request.method == "GET":
+        context = {"form": PostForm}
+        return render(request, "post_create.html", context)
+    elif request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            body = form.cleaned_data["body"]
+            author_name = form.cleaned_data["author_name"]
+            
+            post = Post.objects.create(
+                title=title, body=body, author_name=author_name
+            )
+            context = {"post": post}
+            return render(
+                request, "post_detail.html", context
+            )
         return redirect("posts")
 
 
