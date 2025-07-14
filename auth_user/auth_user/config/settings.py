@@ -126,5 +126,5 @@ LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIREC_URL = "home"
 
 KAKAO_REST_API_KEY = "f63c78b64b2a50400b78e6cb1715346a"
-KAKAO_CALLBACK_URL = "http;//127.0.0.1:8000/users/social/kakao/callback"
+KAKAO_CALLBACK_URL = "http://127.0.0.1:8000/users/social/kakao/callback/"
 
