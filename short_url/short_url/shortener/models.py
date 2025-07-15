@@ -1,5 +1,6 @@
-from django.db import models
+import string, random
 
+from django.db import models
 
 # Create your models here.
 
@@ -12,3 +13,8 @@ class ShortURL(models.Model):
     class Meta:
         app_label = "shortener"
         db_table = "short_url"
+    
+    @staticmethod
+    def generate_code():
+        characters = string.ascii_letters + string.digits
+        return "".join(random.choices(characters, k=8))
