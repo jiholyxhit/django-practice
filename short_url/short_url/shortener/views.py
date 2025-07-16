@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from django.shortcuts import redirect
+from django.db.models import F
+
 
 from shortener.models import ShortURL
 from shortener.forms import ShortURLForm
@@ -28,3 +29,10 @@ class ShortURLCreateView(View):
         obj.code = code
         obj.save()
         return redirect("home")
+    
+class RedirectView(View):
+    def get(self, request, code):
+        short_url = get_object_or_404(ShortURL, code=code)
+        short_url.access_count = F("access_count") + 1
+        short_url.save()
+        return redirect(short_url.original_url)
