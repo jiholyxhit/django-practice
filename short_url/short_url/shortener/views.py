@@ -30,9 +30,14 @@ class ShortURLCreateView(View):
         obj.save()
         return redirect("home")
     
-class RedirectView(View):
+class ShortURLDetailView(View):
     def get(self, request, code):
         short_url = get_object_or_404(ShortURL, code=code)
         short_url.access_count = F("access_count") + 1
         short_url.save()
         return redirect(short_url.original_url)
+    
+    def delete(self, request, code):
+        short_url = get_object_or_404(ShortURL, code=code)
+        short_url.delete()
+        return redirect("home")
