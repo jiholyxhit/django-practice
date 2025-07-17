@@ -4,7 +4,8 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views import View
 from django.contrib.auth import login
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from user.models import CustomUser
 from user.forms import CustomUserCreationForm
 from django.conf import settings
 
@@ -75,9 +76,9 @@ class KakaoCallbackView(View):
 
                 try:
                     #checking if the user already have existed
-                    user = User.objects.get(username=username)
-                except User.DoesNotExist:
-                    user = User.objects.create_user(
+                    user = CustomUser.objects.get(username=username)
+                except CustomUser.DoesNotExist:
+                    user = CustomUser.objects.create_user(
                         username = username,
                         email = email,
                         password = str(uuid.uuid4()),
